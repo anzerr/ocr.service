@@ -1,0 +1,54 @@
+{
+	"name": "ocr.service",
+	"version": "1.0.0",
+	"description": "",
+	"main": "dist/index.js",
+	"scripts": {
+		"start": "npm run build && ts-node index.ts",
+		"build": "tsc -p ./",
+		"clean": "find ./src -regex \".*.(js|map|d.ts)\" -type f -delete && rm -Rf ./dist"
+	},
+	"keywords": [],
+	"author": "anzerr",
+	"license": "MIT",
+	"devDependencies": {
+		"@types/node": "^12.7.2",
+		"eslint-config-typescript": "git+https://git@github.com/anzerr/eslint-config-typescript.git",
+		"ts-node": "^8.3.0",
+		"typescript": "^3.5.3"
+	},
+	"dependencies": {
+		"alias.util": "git+https://git@github.com/anzerr/alias.util.git",
+		"console.color": "git+https://git@github.com/anzerr/console.color.git",
+		"form.pipe": "git+https://git@github.com/anzerr/form.pipe.git",
+		"fs.promisify": "git+https://git@github.com/anzerr/fs.promisify.git",
+		"fs.remove": "git+https://github.com/anzerr/fs.remove.git",
+		"http.ts": "git+https://git@github.com/anzerr/http.ts.git",
+		"inject.ts": "git+https://git@github.com/anzerr/inject.ts.git",
+		"reflect-metadata": "^0.1.13",
+		"request.libary": "git+https://git@github.com/anzerr/request.libary.git",
+		"swagger.ts": "git+https://git@github.com/anzerr/swagger.ts.git",
+		"tesseract.js": "^2.0.0-alpha.13",
+		"type.util": "git+https://git@github.com/anzerr/type.util.git"
+	},
+	"eslintConfig": {
+		"extends": "eslint-config-typescript"
+	},
+	"pathAlias": {
+		"@util": "dist/src/util",
+		"@controller": "dist/src/controller",
+		"@entity": "dist/src/entity"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git@github.com:anzerr/ocr.service.git"
+	},
+	"engines": {
+		"node": ">= 0.10.0"
+	},
+	"types": "dist/index.d.ts",
+	"bugs": {
+		"url": "https://github.com/anzerr/ocr.service/issues"
+	},
+	"homepage": "https://github.com/anzerr/ocr.service#readme"
+}
