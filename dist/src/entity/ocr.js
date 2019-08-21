@@ -12,25 +12,28 @@ Object.defineProperty(exports, "__esModule", { value: true });
 require("reflect-metadata");
 const inject_ts_1 = require("inject.ts");
 const tesseract_js_1 = require("tesseract.js");
-const fs = require("fs.promisify");
 const path = require("path");
-const remove = require("fs.remove");
 const stream_1 = require("stream");
 const logger_1 = require("@util/logger");
 class Ocr {
     constructor() {
         this.worker = new tesseract_js_1.TesseractWorker();
+        this.ext = {
+            '.png': true,
+            '.jpg': true
+        };
     }
     stream() {
         return new stream_1.Transform({
             objectMode: true,
             transform: (file, encoding, callback) => {
                 try {
-                    const name = Math.random().toString(36).substr(2) + path.parse(file.filename).ext, dir = path.join(__dirname, name);
-                    file.stream.pipe(fs.createWriteStream(dir)).on('close', () => {
-                        return this.runPath(dir).then((res) => {
-                            return remove(dir).then(() => res);
-                        }).then((res) => {
+                    if (!this.ext[path.parse(file.filename).ext]) {
+                        return callback(new Error('invalid file type'));
+                    }
+                    const out = [];
+                    file.stream.on('data', (d) => out.push(d)).on('end', () => {
+                        this.runPath(Buffer.concat(out)).then((res) => {
                             callback(null, res);
                         }).catch((err) => {
                             console.log('here', err);

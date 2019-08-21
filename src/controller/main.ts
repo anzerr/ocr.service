@@ -1,11 +1,12 @@
 
 import 'reflect-metadata';
-import {Server, Controller, Get, Post} from 'http.ts';
+import {Server, Controller, Get, Post, Midware} from 'http.ts';
 import {FormPipe} from 'form.pipe';
 import {Inject} from 'inject.ts';
 import {Meta} from 'swagger.ts';
 import Logger from '@util/logger';
 import Ocr from '../entity/ocr';
+import midware from '../entity/midware';
 
 @Controller('/api/v1')
 export default class MainController extends Server.Controller {
@@ -17,6 +18,7 @@ export default class MainController extends Server.Controller {
 	ocr: Ocr;
 
 	@Get('ocr')
+	@Midware(midware.url)
 	@Meta.param.query('url', 'file to test', {schema: {type: 'string', example: 'https://tesseract.projectnaptha.com/img/eng_bw.png'}})
 	@Meta.responses(200, 'good')
 	@Meta.responses(500, 'bad')
@@ -34,6 +36,7 @@ export default class MainController extends Server.Controller {
 	}
 
 	@Post('ocr')
+	@Midware(midware.file)
 	@Meta.param.formData('file', 'file to upload', {type: 'file'})
 	import(): any {
 		const out = [];

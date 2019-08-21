@@ -16,6 +16,7 @@ const inject_ts_1 = require("inject.ts");
 const swagger_ts_1 = require("swagger.ts");
 const logger_1 = require("@util/logger");
 const ocr_1 = require("../entity/ocr");
+const midware_1 = require("../entity/midware");
 let MainController = class MainController extends http_ts_1.Server.Controller {
     get() {
         if (!this.query.url) {
@@ -49,6 +50,7 @@ __decorate([
 ], MainController.prototype, "ocr", void 0);
 __decorate([
     http_ts_1.Get('ocr'),
+    http_ts_1.Midware(midware_1.default.url),
     swagger_ts_1.Meta.param.query('url', 'file to test', { schema: { type: 'string', example: 'https://tesseract.projectnaptha.com/img/eng_bw.png' } }),
     swagger_ts_1.Meta.responses(200, 'good'),
     swagger_ts_1.Meta.responses(500, 'bad'),
@@ -58,6 +60,7 @@ __decorate([
 ], MainController.prototype, "get", null);
 __decorate([
     http_ts_1.Post('ocr'),
+    http_ts_1.Midware(midware_1.default.file),
     swagger_ts_1.Meta.param.formData('file', 'file to upload', { type: 'file' }),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
